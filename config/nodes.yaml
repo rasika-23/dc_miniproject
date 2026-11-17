@@ -1,0 +1,49 @@
+# Cluster definition for the no-Docker setup.
+# Every node runs the same service; the coordinator role is decided by the Bully election.
+nodes:
+  - id: 1
+    priority: 1
+    host: 127.0.0.1
+    port: 8001
+  - id: 2
+    priority: 2
+    host: 127.0.0.1
+    port: 8002
+  - id: 3
+    priority: 3
+    host: 127.0.0.1
+    port: 8003
+  - id: 4
+    priority: 4
+    host: 127.0.0.1
+    port: 8004
+  - id: 5
+    priority: 5
+    host: 127.0.0.1
+    port: 8005
+
+# All values are seconds unless stated otherwise. They are experimental settings,
+# not guarantees: an overloaded laptop can cause false suspicions, so tune freely.
+timing:
+  heartbeat_interval: 1.0            # worker -> coordinator
+  suspicion_timeout: 3.0             # no heartbeat for this long -> SUSPECTED
+  failure_confirmation: 2.0          # extra silence after suspicion -> FAILED
+  coordinator_heartbeat_interval: 1.0
+  coordinator_timeout: 4.0           # workers start an election after this silence
+  election_timeout: 1.5              # how long a candidate waits for an OK
+  coordinator_wait_timeout: 3.0      # how long to wait for COORDINATOR after an OK
+  election_max_retries: 3
+  election_stagger: 0.15             # per-priority-step delay before electing (0 = textbook Bully)
+  startup_grace: 1.5                 # let peers boot before the first election
+  request_timeout: 1.0
+  detector_tick: 0.5
+  status_sync_interval: 2.0
+  recovery_validation_beats: 2       # valid heartbeats needed before RECOVERING -> HEALTHY
+  heartbeat_log_every: 10            # persist every Nth received heartbeat per peer
+
+faults:
+  enabled: true                      # fault injection is accepted from loopback only
+
+storage:
+  data_dir: data                     # node_<id>.db and controller.db live here
+  runtime_dir: runtime               # pids.json and node logs

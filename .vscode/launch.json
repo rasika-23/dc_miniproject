@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dashboard (Streamlit)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "dashboard/app.py"],
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true
+    },
+    {
+      "name": "Start cluster (5 nodes)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/start_cluster.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Run one node in the debugger (id 3)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "node.main",
+      "args": ["--id", "3"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Run experiment (pick a scenario)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/run_experiment.py",
+      "args": ["${input:scenario}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "scenario",
+      "type": "pickString",
+      "description": "Experiment scenario",
+      "options": ["initial_election", "worker_crash", "coordinator_crash", "coordinator_recovery",
+                  "delayed_heartbeat", "message_loss", "repeated_failovers", "dashboard_resilience", "all"],
+      "default": "coordinator_crash"
+    }
+  ]
+}

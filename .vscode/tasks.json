@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "Start cluster", "type": "shell", "command": "python scripts/start_cluster.py", "problemMatcher": []},
+    {"label": "Start cluster (fresh databases)", "type": "shell", "command": "python scripts/start_cluster.py --fresh", "problemMatcher": []},
+    {"label": "Open dashboard", "type": "shell", "command": "streamlit run dashboard/app.py", "problemMatcher": [], "isBackground": true},
+    {"label": "Stop all nodes", "type": "shell", "command": "python scripts/stop_node.py --all", "problemMatcher": []},
+    {"label": "Run tests", "type": "shell", "command": "python -m pytest", "group": "test", "problemMatcher": []}
+  ]
+}
